@@ -13,7 +13,7 @@ function playRound(playerSelection, computerSelection) {
     console.log(`Player: ${playerSelection}`);
     console.log(`Computer: ${computerSelection}`);
 
-    if (playerSelection === computerSelection) {
+    if (playerSelection == computerSelection) {
         console.log("It's a tie!");
         return "tie";
     }
