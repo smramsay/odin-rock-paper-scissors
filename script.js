@@ -10,43 +10,48 @@ function getPlayerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
+    console.log(`Player: ${playerSelection}`);
+    console.log(`Computer: ${computerSelection}`);
+
     if (playerSelection === computerSelection) {
         console.log("It's a tie!");
         return "tie";
     }
-    console.log(playerSelection);
-    console.log(computerSelection);
+    
+    let playerLost = null;
     switch (playerSelection) {
         case 'rock':
             if (computerSelection == "paper") {
-                console.log("You lose! Paper beats Rock");
-                return "computer";
+                playerLost = true;
             } else if (computerSelection == "scissors") {
-                console.log("You win! Rock beats Scissors");
-                return "player"
+                playerLost = false;
             }
             break;
         case 'paper':
             if (computerSelection == "scissors") {
-                console.log("You lose! Scissors beats Paper");
-                return "computer";
+                playerLost = true;
             } else if (computerSelection == "rock") {
-                console.log("You win! Paper beats Rock");
-                return "player";
+                playerLost = false;
             }
             break;
         case 'scissors':
             if (computerSelection == "rock") {
-                console.log("You lose! Rock beats Scissors");
-                return "computer";
+                playerLost = true;
             } else if (computerSelection == "paper") {
-                console.log("You win! Scissors beats Paper");
-                return "player"
+                playerLost = false;
             }
             break;
         default:
             console.log("You lose by not making a valid choice!");
             return "computer";
+    }
+
+    if (playerLost) {
+        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+        return "computer";
+    } else {
+        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        return "player";
     }
 }
 
