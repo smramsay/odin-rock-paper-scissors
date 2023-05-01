@@ -60,13 +60,16 @@ function playRound(playerSelection, computerSelection) {
 }
 
 // TODO: Disable buttons to stop the game or replace with a reset button.
-// TODO: Add 'game over' text to the last game result instead of replacing it.
 function checkWin() {
     const resultDiv = document.querySelector('.result');
     document.querySelectorAll('.score div span').forEach(score => {
         if (parseInt(score.textContent) === 5) {
             const parentId = score.parentNode.getAttribute('id');
-            resultDiv.textContent = `Game Over! ${parentId} wins!`;
+            
+            const finalResult = document.createElement('h3');
+            finalResult.textContent = `Game Over! ${parentId} wins!`;
+            resultDiv.after(finalResult);
+
             return parentId;
         }
     });
