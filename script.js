@@ -13,8 +13,10 @@ function playRound(playerSelection, computerSelection) {
     console.log(`Player: ${playerSelection}`);
     console.log(`Computer: ${computerSelection}`);
 
+    const resultDiv = document.querySelector('.result');
+
     if (playerSelection == computerSelection) {
-        console.log("It's a tie!");
+        resultDiv.textContent = "It's a tie!";
         return "tie";
     }
     
@@ -47,12 +49,34 @@ function playRound(playerSelection, computerSelection) {
     }
 
     if (playerLost) {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-        return "computer";
+        resultDiv.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        incrementScore('computer');
     } else {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-        return "player";
+        resultDiv.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+        incrementScore('player');
     }
+    checkWin();
+    return playerLost ? "computer" : "player";
+}
+
+// TODO: Disable buttons to stop the game or replace with a reset button.
+// TODO: Add 'game over' text to the last game result instead of replacing it.
+function checkWin() {
+    const resultDiv = document.querySelector('.result');
+    document.querySelectorAll('.score div span').forEach(score => {
+        if (parseInt(score.textContent) === 5) {
+            const parentId = score.parentNode.getAttribute('id');
+            resultDiv.textContent = `Game Over! ${parentId} wins!`;
+            return parentId;
+        }
+    });
+    return false;
+}
+
+function incrementScore(winner) {
+    const score = document.querySelector(`.score #${winner} span`)
+    const curScore = parseInt(score.textContent);
+    score.textContent = curScore + 1
 }
 
 function game(rounds = 5) {
@@ -73,4 +97,6 @@ function game(rounds = 5) {
     console.log(`Player: ${playerScore}, Computer: ${computerScore}, Ties: ${rounds - (playerScore + computerScore)}`);
 }
 
-game();
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(button => button.addEventListener('click', (event) => playRound(button.textContent.toLowerCase(), getComputerChoice())));
